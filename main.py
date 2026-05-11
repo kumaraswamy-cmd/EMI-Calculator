@@ -1,29 +1,50 @@
-print("Project Started")
-
-while True:
-
-#heading
-    print("==================")
-    print("EMI CALCULATOR")
-    print("==================")
-
-#gathering inputs
-    customer_name = input("Enter Customer Name: ")
-    loan_amount = float(input("Enter the Loan Amount: "))
-    interest_rate = float(input("Enter the Interest Rate(%): "))
-    loan_duration = int(input("Enter the Loan Duration (in years): "))
-    monthly_interest_rate = interest_rate / (12 * 100)
-    loan_months = loan_duration * 12
-
-    EMI = (loan_amount * monthly_interest_rate * (1 + monthly_interest_rate) ** loan_months) / ((1 + monthly_interest_rate) ** loan_months - 1)
+from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
+from pathlib import Path
+import socket
+import webbrowser
 
 
-    print("\n------ EMI DETAILS ------")
-    print(f"Customer Name: {customer_name}")
-    print(f"Monthly EMI: ₹{EMI:.2f}")
+ROOT = Path(__file__).resolve().parent
+WEB_DIR = ROOT / "web"
+HOST = "127.0.0.1"
+DEFAULT_PORT = 8000
 
-    again = input("\nDo you want to calculate EMI for another customer? (yes/no): ")
 
-    while again.lower() == 'no':
-        print("Thank you for using the EMI Calculator. Goodbye!")
-        break
+class StaticHandler(SimpleHTTPRequestHandler):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, directory=str(WEB_DIR), **kwargs)
+
+    def end_headers(self):
+        self.send_header("Cache-Control", "no-store")
+        super().end_headers()
+
+
+def find_available_port(start_port):
+    for port in range(start_port, start_port + 50):
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as probe:
+            probe.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+            try:
+                probe.bind((HOST, port))
+            except OSError:
+                continue
+            return port
+    raise RuntimeError("No available local port found.")
+
+
+def main():
+    if not WEB_DIR.exists():
+        raise FileNotFoundError(f"Missing web app folder: {WEB_DIR}")
+
+    port = find_available_port(DEFAULT_PORT)
+    url = f"http://{HOST}:{port}"
+
+    with ThreadingHTTPServer((HOST, port), StaticHandler) as server:
+        print("EMI Calculator web app is running locally.")
+        print(f"Open: {url}")
+        print("Press Ctrl+C to stop the server.")
+        webbrowser.open(url)
+        server.serve_forever()
+
+
+if __name__ == "__main__":
+    main()
