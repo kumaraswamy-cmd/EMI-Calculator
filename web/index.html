@@ -10,11 +10,6 @@
     <main class="desktop-shell" aria-labelledby="app-title">
       <section class="app-window">
         <header class="title-bar">
-          <div class="window-controls" aria-hidden="true">
-            <span class="control close"></span>
-            <span class="control minimize"></span>
-            <span class="control maximize"></span>
-          </div>
           <p class="window-title">EMI Calculator</p>
           <button class="icon-button" id="resetBtn" type="button" aria-label="Reset calculator" title="Reset calculator">
             <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -32,22 +27,22 @@
             </div>
 
             <div class="hero-total">
-              <span id="emiValue">Rs 0</span>
+              <span id="emiValue">Rs --</span>
               <small>estimated EMI per month</small>
             </div>
 
             <div class="quick-stats" aria-live="polite">
               <div>
                 <span>Total payable</span>
-                <strong id="totalPayable">Rs 0</strong>
+                <strong id="totalPayable">--</strong>
               </div>
               <div>
                 <span>Total interest</span>
-                <strong id="totalInterest">Rs 0</strong>
+                <strong id="totalInterest">--</strong>
               </div>
               <div>
                 <span>Loan tenure</span>
-                <strong id="tenureMonths">0 months</strong>
+                <strong id="tenureMonths">--</strong>
               </div>
             </div>
           </aside>
@@ -56,49 +51,37 @@
             <form id="emiForm">
               <label class="field">
                 <span>Customer name</span>
-                <input id="customerName" name="customerName" type="text" value="Aarav Kumar" autocomplete="name">
+                <input id="customerName" name="customerName" type="text" placeholder="ex. Kumara Swamy" autocomplete="name">
               </label>
 
-              <div class="field">
-                <div class="field-heading">
-                  <label for="loanAmount">Loan amount</label>
-                  <output id="loanAmountOutput" for="loanAmount">Rs 500,000</output>
-                </div>
-                <input id="loanAmount" name="loanAmount" type="range" min="0" max="10000000" step="50000" value="500000">
-                <input class="number-input" id="loanAmountText" type="number" min="0" step="1000" value="500000" aria-label="Loan amount value">
-              </div>
+              <label class="field" for="loanAmountText">
+                <span>Loan amount</span>
+                <input class="number-input" id="loanAmountText" name="loanAmount" type="number" min="0" step="1000" placeholder="ex. 500000" inputmode="decimal">
+              </label>
 
-              <div class="field">
-                <div class="field-heading">
-                  <label for="interestRate">Interest rate</label>
-                  <output id="interestRateOutput" for="interestRate">8.5%</output>
-                </div>
-                <input id="interestRate" name="interestRate" type="range" min="0" max="24" step="0.1" value="8.5">
-                <input class="number-input" id="interestRateText" type="number" min="0" max="24" step="0.1" value="8.5" aria-label="Interest rate value">
-              </div>
+              <label class="field" for="interestRateText">
+                <span>Interest rate</span>
+                <input class="number-input" id="interestRateText" name="interestRate" type="number" min="0" max="24" step="0.1" placeholder="ex. 8.5" inputmode="decimal">
+              </label>
 
-              <div class="field">
-                <div class="field-heading">
-                  <label for="loanDuration">Duration</label>
-                  <output id="loanDurationOutput" for="loanDuration">5 years</output>
-                </div>
-                <input id="loanDuration" name="loanDuration" type="range" min="1" max="30" step="1" value="5">
-                <input class="number-input" id="loanDurationText" type="number" min="1" max="30" step="1" value="5" aria-label="Loan duration value">
-              </div>
+              <label class="field" for="loanDurationText">
+                <span>Duration in years</span>
+                <input class="number-input" id="loanDurationText" name="loanDuration" type="number" min="1" max="30" step="1" placeholder="ex. 5" inputmode="numeric">
+              </label>
             </form>
 
             <div class="result-band" aria-live="polite">
               <div>
                 <span>For</span>
-                <strong id="customerLabel">Aarav Kumar</strong>
+                <strong id="customerLabel">Not entered</strong>
               </div>
               <div>
                 <span>Principal</span>
-                <strong id="principalLabel">Rs 500,000</strong>
+                <strong id="principalLabel">--</strong>
               </div>
               <div>
                 <span>Interest share</span>
-                <strong id="interestShare">0%</strong>
+                <strong id="interestShare">--</strong>
               </div>
             </div>
 

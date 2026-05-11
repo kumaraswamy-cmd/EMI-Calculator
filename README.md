@@ -6,7 +6,8 @@ A local Apple-inspired web EMI Calculator built with Python, HTML, CSS, and Java
 - Runs locally in your browser
 - Apple-style desktop window design
 - Calculates monthly EMI, total payable, and total interest
-- Includes sliders and direct number inputs
+- Starts blank with example placeholders
+- Includes direct number inputs
 - Handles zero-interest loans
 
 ## Technologies Used
